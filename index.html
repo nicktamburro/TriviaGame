@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script type ="text/javascript" src ="assets/javascript/app.js"></script>
+ <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+
+	
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+	<title>Trivia!</title>
+</head>
+<body>
+
+<div class="jumbotron">
+  <h1 class="title">Trivia Game!</h1>
+  <h1 class="question"></h1>
+
+  <button type="button" class="btn btn-success answer1"></button>
+  <button type="button" class="btn btn-primary answer2"></button>
+  <button type="button" class="btn btn-info answer3"></button>
+  <button type="button" class="btn btn-danger answer4"></button>
+  <p><a class="btn btn-primary btn-lg button" href="#" role="button">Play!</a></p>
+</div>
+
+
+<script type="text/javascript">
+
+var right = 0;
+var wrong = 0;
+var unanswered = 0;
+
+
+var questions = [{
+
+	question: "What are we doing here?",
+	answers: ["This!", "That!","Another thing!","The first thing!"],
+	rightAnswer: "This!",
+},  {
+	question: "What's it about?",
+	answers: ["Them!","Us!","Nobody!","Everybody!"],
+	rightAnswer: "Us!",
+},   {
+	question: "Who is it?",
+	answers: ["Him!","Her!","They!","Them!"],
+	rightAnswer: "They!",
+}];
+
+
+$(".answer1").hide(); 
+$(".answer2").hide();
+$(".answer3").hide();
+$(".answer4").hide();
+	
+$(".button").click(function(){ 
+	startGame();
+	$(".answer1").show();
+	$(".answer2").show();
+	$(".answer3").show();
+	$(".answer4").show();
+	$(".button").hide();
+
+});
+
+
+
+function startGame(){
+
+	//but here, really, there should be a loop that picks the question for us, right?
+
+	//reread about objects, how to make the object Q1, with properties, Q, Right A, and 3 Wrong A's...
+	// and a timer goes here!
+
+for (i = 0; i < questions.length; i++){
+	$(".question").html(questions[i].question)
+}
+
+for (i= 0; i < questions.length; i++){
+	$(".answer1").html(questions[i].answers[0])
+	$(".answer2").html(questions[i].answers[1])
+	$(".answer3").html(questions[i].answers[2])
+	$(".answer4").html(questions[i].answers[3])
+}
+
+//	$(".question").html(q1.question);
+	/*$(".answer1").html(q1.answer1);
+	$(".answer2").html(q1.rightAnswer);
+	$(".answer3").html(q1.answer3);
+	$(".answer4").html(q1.answer4);*/
+}
+
+function answers(){
+	//if else statement saying, if they run out of time, do this, if win, do this, if lose, do this)
+
+}
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
