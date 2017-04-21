@@ -19,11 +19,14 @@
   <h1 class="title">Trivia Game!</h1>
   <h1 class="timer"></h1>
   <h1 class="question"></h1>
+  <h2 class="right"></h2>
+  <h2 class="wrong"></h2>
+  <h2 class="unanswered"></h2>
 
-  <button type="button" class="btn btn-success answer1"></button><br><br>
-  <button type="button" class="btn btn-primary answer2"></button><br><br>
-  <button type="button" class="btn btn-info answer3"></button><br><br>
-  <button type="button" class="btn btn-danger answer4"></button><br><br>
+  <button type="button" class="btn btn-success answer1 answerbutton"></button><br><br>
+  <button type="button" class="btn btn-primary answer2 answerbutton"></button><br><br>
+  <button type="button" class="btn btn-info answer3 answerbutton"></button><br><br>
+  <button type="button" class="btn btn-danger answer4 answerbutton"></button><br><br>
   <p><a class="btn btn-primary btn-lg button" href="#" role="button">Play!</a></p>
 </div>
 
@@ -62,48 +65,16 @@ var answerScreens = ["The answer is This!", "The answer is Us!", "The answer is 
 
 
 
-$(".answer1").hide(); 
-$(".answer2").hide();
-$(".answer3").hide();
-$(".answer4").hide();
+$(".answerbutton").hide(); 
+
 	
 $(".button").click(function(){ 
 	nextQuestion();
-	$(".answer1").show();
-	$(".answer2").show();
-	$(".answer3").show();
-	$(".answer4").show();
+	$(".answerbutton").show();
 	$(".button").hide();
-	//make the timer here?
-
-	/*setTimeout(function(){
-		unanswered++;
-          nextQuestion();
-        }, 10000);*/
-      
-
 
 });
 
-
-
-/*function startGame(){
-
-	setTimeout(function(){
-		unanswered++;
-		i++;
-          answerScreen();
-        }, 10000);
-
-		$(".question").html(questions[i].question);
-
-		$(".answer1").html(questions[i].answers[0])
-		$(".answer2").html(questions[i].answers[1])
-		$(".answer3").html(questions[i].answers[2])
-		$(".answer4").html(questions[i].answers[3])*/
-//questions[0].answers)  try that?
-//}
-//HERE'S where we need it to do an increment or something!
 function nextQuestion(){
 
 	setTimeout(function(){
@@ -111,10 +82,7 @@ function nextQuestion(){
           answerScreen();
         }, 10000);
 
-	$(".answer1").show();
-	$(".answer2").show();
-	$(".answer3").show();
-	$(".answer4").show();
+	$(".answerbutton").show();
 
 	 $(".question").html(questions[i].question);
 
@@ -125,14 +93,6 @@ function nextQuestion(){
 
 }
 
-/*var questionTime = 90;
-
-function count() {
-
-    questionTime--;
-
-    $(".timer").html(questionTime);
-  }*/
  
 
 function answerScreen(){
@@ -143,16 +103,35 @@ function answerScreen(){
 	$(".question").html(answerScreens[j]);
 
 
-
+if (i < questions.length) {
 	setTimeout(function(){
           nextQuestion();
           j++;
         }, 5000);
+
+//NEXT: little glitch here, it's not showing the answer screen for the last one, since it's not
+//< questions.length anymore... 
+} else {
+	endScreen();
+
+}
 }
 
+function endScreen(){
 
+	//NEXT NEXT: need to clear the timeout, and STOP THE QUESTIONS!
 
-//now we need any choice to make it go to the next screen!
+	$(".question").hide();
+	$(".answer1").hide(); 
+	$(".answer2").hide();
+	$(".answer3").hide();
+	$(".answer4").hide();
+	$(".right").html("You got " + right + " answers right!");
+	$(".wrong").html("You got " + wrong + " answers wrong!");
+	$(".unanswered").html("You didn't answer " + unanswered + " questions!");
+
+}
+
 	$(".answer1").on("click", function(){
 		userChoices.push(questions[i].answers[0]);
 		if (questions[i].answers[0] === questions[i].rightAnswer){
@@ -199,7 +178,6 @@ function answerScreen(){
 		
 		}
 
-		//okay cool, got it
 	});
 	$(".answer4").on("click", function(){
 		userChoices.push(questions[i].answers[3]);
@@ -222,4 +200,4 @@ function answerScreen(){
 </script>
 
 </body>
-</html>comm
+</html>
