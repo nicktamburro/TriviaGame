@@ -17,7 +17,7 @@
 
 <div class="jumbotron text-center">
   <h1 class="title">Trivia Game!</h1>
-  <h1 class="timer"></h1>
+  <h1 id="timer"></h1>
   <h1 class="question"></h1>
   <h2 class="right"></h2>
   <h2 class="wrong"></h2>
@@ -41,6 +41,7 @@ var userGuess = 0;
 
 var timer; 
 var counter = 10;
+var intervalId;
 var i = 0;
 var j = 0;
 
@@ -72,17 +73,46 @@ $(".button").click(function(){
 	nextQuestion();
 	$(".answerbutton").show();
 	$(".button").hide();
+		
 
 });
 
-function nextQuestion(){
+function runTimer(){
+	intervalId = setInterval(decrement, 1000);
+}
 
-	setTimeout(function(){
+function resetTimer(){
+	counter = 10;
+}
+
+function decrement(){
+	counter--;
+	$("#timer").html("<h2>" + counter + "</h2>");
+
+	if (counter === 0) {
+		stopTimer();
+		resetTimer();
+		answerScreen();
 		unanswered++;
-          answerScreen();
-        }, 10000);
+	}
+}
 
+function stopTimer(){
+	clearInterval(intervalId);
+}
+
+function nextQuestion(){
+		$("#timer").show();
+		resetTimer();
+		runTimer();
+	//setTimeout(function(){
+		/*runTimer();
+        if (counter === 0){
+        	answerScreen();
+        	unanswered++;
+        }*/
 	$(".answerbutton").show();
+
 
 	 $(".question").html(questions[i].question);
 
@@ -101,9 +131,11 @@ function answerScreen(){
 	$(".answer3").hide();
 	$(".answer4").hide();
 	$(".question").html(answerScreens[j]);
+	$("#timer").hide();
 
 
-if (i < questions.length) {
+if (i < answerScreens.length) {
+	stopTimer();
 	setTimeout(function(){
           nextQuestion();
           j++;
@@ -112,7 +144,9 @@ if (i < questions.length) {
 //NEXT: little glitch here, it's not showing the answer screen for the last one, since it's not
 //< questions.length anymore... 
 } else {
+	setTimeout(function(){
 	endScreen();
+}, 5000);
 
 }
 }
@@ -120,7 +154,7 @@ if (i < questions.length) {
 function endScreen(){
 
 	//NEXT NEXT: need to clear the timeout, and STOP THE QUESTIONS!
-
+	clearInterval(intervalId);
 	$(".question").hide();
 	$(".answer1").hide(); 
 	$(".answer2").hide();
@@ -138,11 +172,13 @@ function endScreen(){
 			alert("yes!");
 			right++;
 			i++;
+			stopTimer();
 			answerScreen();
 		} else {
 			alert("no!");
 			wrong++;
 			i++;
+			stopTimer();
 			answerScreen();
 		}
 	});
@@ -152,12 +188,14 @@ function endScreen(){
 			alert("yes!");
 			right++;
 			i++;
+			stopTimer();
 			answerScreen();
 		
 		} else {
 			alert("no!");
 			wrong++;
 			i++;
+			stopTimer();
 			answerScreen();
 	
 		}
@@ -168,12 +206,14 @@ function endScreen(){
 			alert("yes!");
 			right++;
 			i++;	
+			stopTimer();
 			answerScreen();	
 
 		} else {
 			alert("no!");
 			wrong++;
 			i++;
+			stopTimer();
 			answerScreen();
 		
 		}
@@ -185,12 +225,14 @@ function endScreen(){
 			alert("yes!");
 			right++;
 			i++;
+			stopTimer();
 			answerScreen();
 			
 		} else {
 			alert("no!");
 			wrong++;
 			i++;
+			stopTimer();
 			answerScreen();
 			
 		}
