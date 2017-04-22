@@ -7,6 +7,7 @@
   src="https://code.jquery.com/jquery-3.2.1.js"
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
   crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=New+Rocker" rel="stylesheet">
 
 	
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -16,14 +17,17 @@
 <body>
 
 <div class="jumbotron text-center">
-  <h1 class="title">Trivia Game!</h1>
+  <h1>Which Punk Rock Legend Are You?</h1>
+  <h1 class="subtitle">(based on your knowledge of cats)</h1>
   <h1 id="timer"></h1>
   <h1 class="question"></h1>
+  <div id="pic"></div>
+  <h2 id="message"></h2>
   <h2 id="percent"></h2>
   <h2 class="right"></h2>
   <h2 class="wrong"></h2>
   <h2 class="unanswered"></h2>
-  <h2 id="message"></h2>
+ 
 
   <button type="button" class="btn btn-success answer1 answerbutton"></button><br><br>
   <button type="button" class="btn btn-primary answer2 answerbutton"></button><br><br>
@@ -46,6 +50,8 @@ var counter = 10;
 var intervalId;
 var i = 0;
 var j = 0;
+var k = 0;
+
 
 
 var questions = [{
@@ -58,7 +64,7 @@ var questions = [{
 	answers: ["The cats are infinite!","The cats are finite!","There is one cat!","There are no cats!"],
 rightAnswer: "The cats are finite!",
 },   {
-	question: "Which of the following is a breed of cat?",
+	question: "Which is a breed of cat?",
 	answers: ["Pomeranian!","Stradivarius!","Siamese!","Frigidaire!"],
 	rightAnswer: "Siamese!",
 },  {
@@ -75,6 +81,8 @@ rightAnswer: "The cats are finite!",
 
 var answerScreens = ["Cats are mammals!", "Cats are finite!", "A Siamese is a breed of cat!", "Cats love to say Meow!", "Garfield is a famous cat!"];
 
+var pics = ["assets/images/punkcat1.jpg", "assets/images/punkcat2.jpg", "assets/images/punkcat3.jpg", "assets/images/punkcat4.jpg", "assets/images/punkcat5.jpg"];
+
 
 
 
@@ -85,6 +93,7 @@ $(".button").click(function(){
 	nextQuestion();
 	$(".answerbutton").show();
 	$(".button").hide();
+	$(".subtitle").hide();
 		
 
 });
@@ -102,10 +111,12 @@ function decrement(){
 	$("#timer").html("<h2>" + counter + "</h2>");
 
 	if (counter === 0) {
+		i++;
 		unanswered++;
 		stopTimer();
 		resetTimer();
 		answerScreen();
+
 		
 	}
 }
@@ -115,6 +126,7 @@ function stopTimer(){
 }
 
 function nextQuestion(){
+		$("#pic").hide();
 		$("#timer").show();
 		resetTimer();
 		runTimer();
@@ -135,6 +147,7 @@ function nextQuestion(){
 function answerScreen(){
 	$(".answerbutton").hide(); 
 	$(".question").html(answerScreens[j]);
+	$("#pic").html(pics[k]);
 	$("#timer").hide();
 
 
@@ -143,6 +156,7 @@ if (i < questions.length) {
 	setTimeout(function(){
           nextQuestion();
           j++;
+          k++;
         }, 5000); 
 } else {
 	stopTimer();
@@ -167,13 +181,17 @@ function endScreen(){
 	$(".unanswered").html("You didn't answer " + unanswered + "!");
 
 	if (((right / 5) * 100) >= 90){
-		$("#message").html("You know a lot!");
+		$("#message").html("You're Glenn Danzig of the Misfits! You know a lot about cats!");
+		$(".jumbotron").css("background-image", "url(assets/images/danzigcat.jpg)");
 	} else if (((right / 5) * 100) >= 75){
-		$("#message").html("You know some!");
+		$("#message").html("You're Iggy Pop! You know a good amount about cats!");
+		$(".jumbotron").css("background-image", "url(assets/images/iggycat.jpg)");
 	} else if (((right / 5) * 100) >= 25){
-		$("#message").html("You know only a little!");
+		$("#message").html("You're Henry Rollins of Black Flag! You know some things about cats!");
+		$(".jumbotron").css("background-image", "url(assets/images/rollinscat.jpg)");
 	} else {
-		$("#message").html("You are bad at this!");
+		$("#message").html("You're Sid Vicious of the Sex Pistols! You know nothing about cats!");
+		$(".jumbotron").css("background-image", "url(assets/images/sid.jpg)");
 	}
 
 }
@@ -181,13 +199,11 @@ function endScreen(){
 	$(".answer1").on("click", function(){
 		userChoices.push(questions[i].answers[0]);
 		if (questions[i].answers[0] === questions[i].rightAnswer){
-			alert("yes!");
 			right++;
 			i++;
 			stopTimer();
 			answerScreen();
 		} else {
-			alert("no!");
 			wrong++;
 			i++;
 			stopTimer();
@@ -197,14 +213,12 @@ function endScreen(){
 	$(".answer2").on("click", function(){
 		userChoices.push(questions[i].answers[1]);
 		if (questions[i].answers[1] === questions[i].rightAnswer){
-			alert("yes!");
 			right++;
 			i++;
 			stopTimer();
 			answerScreen();
 		
 		} else {
-			alert("no!");
 			wrong++;
 			i++;
 			stopTimer();
@@ -215,14 +229,12 @@ function endScreen(){
 	$(".answer3").on("click", function(){
 		userChoices.push(questions[i].answers[2]);
 		if (questions[i].answers[2] === questions[i].rightAnswer){
-			alert("yes!");
 			right++;
 			i++;	
 			stopTimer();
 			answerScreen();	
 
 		} else {
-			alert("no!");
 			wrong++;
 			i++;
 			stopTimer();
@@ -234,14 +246,12 @@ function endScreen(){
 	$(".answer4").on("click", function(){
 		userChoices.push(questions[i].answers[3]);
 		if (questions[i].answers[3] === questions[i].rightAnswer){
-			alert("yes!");
 			right++;
 			i++;
 			stopTimer();
 			answerScreen();
 			
 		} else {
-			alert("no!");
 			wrong++;
 			i++;
 			stopTimer();
