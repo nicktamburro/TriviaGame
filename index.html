@@ -19,9 +19,11 @@
   <h1 class="title">Trivia Game!</h1>
   <h1 id="timer"></h1>
   <h1 class="question"></h1>
+  <h2 id="percent"></h2>
   <h2 class="right"></h2>
   <h2 class="wrong"></h2>
   <h2 class="unanswered"></h2>
+  <h2 id="message"></h2>
 
   <button type="button" class="btn btn-success answer1 answerbutton"></button><br><br>
   <button type="button" class="btn btn-primary answer2 answerbutton"></button><br><br>
@@ -48,20 +50,30 @@ var j = 0;
 
 var questions = [{
 
-	question: "What are we doing here?",
-	answers: ["This!", "That!","Another thing!","The first thing!"],
-	rightAnswer: "This!",
+	question: "What is a cat?",
+	answers: ["A mammal!", "A bird!","A machine!","Half machine, half bird!"],
+	rightAnswer: "A mammal!",
 },  {
-	question: "What's it about?",
-	answers: ["Them!","Us!","Nobody!","Everybody!"],
-rightAnswer: "Us!",
+	question: "How many cats are in the world?",
+	answers: ["The cats are infinite!","The cats are finite!","There is one cat!","There are no cats!"],
+rightAnswer: "The cats are finite!",
 },   {
-	question: "Who is it?",
-	answers: ["Him!","Her!","They!","Them!"],
-	rightAnswer: "They!",
-}];
+	question: "Which of the following is a breed of cat?",
+	answers: ["Pomeranian!","Stradivarius!","Siamese!","Frigidaire!"],
+	rightAnswer: "Siamese!",
+},  {
+	question: "What is a cat's favorite thing to say?",
+	answers: ["Ahoy!","Alas!","Ahem!","Meow!"],
+	rightAnswer: "Meow!",
+}, {
+	question: "Who is the most famous cat?",
+	answers: ["Garfield!", "James Garfield!","James Dean!","Dean Martin!"],
+	rightAnswer: "Garfield!",
+}, ]
 
-var answerScreens = ["The answer is This!", "The answer is Us!", "The answer is They!"];
+
+
+var answerScreens = ["Cats are mammals!", "Cats are finite!", "A Siamese is a breed of cat!", "Cats love to say Meow!", "Garfield is a famous cat!"];
 
 
 
@@ -90,10 +102,11 @@ function decrement(){
 	$("#timer").html("<h2>" + counter + "</h2>");
 
 	if (counter === 0) {
+		unanswered++;
 		stopTimer();
 		resetTimer();
 		answerScreen();
-		unanswered++;
+		
 	}
 }
 
@@ -105,12 +118,6 @@ function nextQuestion(){
 		$("#timer").show();
 		resetTimer();
 		runTimer();
-	//setTimeout(function(){
-		/*runTimer();
-        if (counter === 0){
-        	answerScreen();
-        	unanswered++;
-        }*/
 	$(".answerbutton").show();
 
 
@@ -126,24 +133,19 @@ function nextQuestion(){
  
 
 function answerScreen(){
-	$(".answer1").hide(); 
-	$(".answer2").hide();
-	$(".answer3").hide();
-	$(".answer4").hide();
+	$(".answerbutton").hide(); 
 	$(".question").html(answerScreens[j]);
 	$("#timer").hide();
 
 
-if (i < answerScreens.length) {
+if (i < questions.length) {
 	stopTimer();
 	setTimeout(function(){
           nextQuestion();
           j++;
-        }, 5000);
-
-//NEXT: little glitch here, it's not showing the answer screen for the last one, since it's not
-//< questions.length anymore... 
+        }, 5000); 
 } else {
+	stopTimer();
 	setTimeout(function(){
 	endScreen();
 }, 5000);
@@ -153,16 +155,26 @@ if (i < answerScreens.length) {
 
 function endScreen(){
 
-	//NEXT NEXT: need to clear the timeout, and STOP THE QUESTIONS!
 	clearInterval(intervalId);
 	$(".question").hide();
 	$(".answer1").hide(); 
 	$(".answer2").hide();
 	$(".answer3").hide();
 	$(".answer4").hide();
-	$(".right").html("You got " + right + " answers right!");
-	$(".wrong").html("You got " + wrong + " answers wrong!");
-	$(".unanswered").html("You didn't answer " + unanswered + " questions!");
+	$("#percent").html(((right / 5) * 100) + "%!");
+		$(".right").html("You got " + right + " right!");
+	$(".wrong").html("You got " + wrong + " wrong!");
+	$(".unanswered").html("You didn't answer " + unanswered + "!");
+
+	if (((right / 5) * 100) >= 90){
+		$("#message").html("You know a lot!");
+	} else if (((right / 5) * 100) >= 75){
+		$("#message").html("You know some!");
+	} else if (((right / 5) * 100) >= 25){
+		$("#message").html("You know only a little!");
+	} else {
+		$("#message").html("You are bad at this!");
+	}
 
 }
 
@@ -239,7 +251,14 @@ function endScreen(){
 
 	});
 
+//rollins
+//iggy pop
+//jello
+//danzig
+
 </script>
+
+
 
 </body>
 </html>
